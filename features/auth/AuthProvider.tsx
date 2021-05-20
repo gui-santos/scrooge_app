@@ -15,12 +15,12 @@ const initialState: AuthState = {
 
 interface AuthContextType {
   state: AuthState;
-  dispatch?: React.Dispatch<AuthAction>;
+  dispatch: React.Dispatch<AuthAction>;
 }
 
 export const AuthContext = createContext<AuthContextType>({
   state: initialState,
-});
+} as AuthContextType);
 
 interface AuthProviderProps {
   children: React.ReactNode;

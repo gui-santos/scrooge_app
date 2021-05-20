@@ -1,8 +1,11 @@
 import type { User } from './types';
 
+import { auth } from '../firebase';
+
 export enum AuthActionTypes {
   FB_AUTH_INITIATED = 'FB_AUTH_INITIATED',
   SIGN_IN = 'SIGN_IN',
+  SIGN_OUT = 'SIGN_OUT',
 }
 
 interface FirebaseAuthInitiatedAction {
@@ -14,7 +17,14 @@ interface SignInAction {
   payload: User;
 }
 
-export type AuthAction = FirebaseAuthInitiatedAction | SignInAction;
+interface SignOutAction {
+  type: AuthActionTypes.SIGN_OUT;
+}
+
+export type AuthAction =
+  | FirebaseAuthInitiatedAction
+  | SignInAction
+  | SignOutAction;
 
 export interface AuthState {
   firebaseStarted: boolean;
@@ -27,6 +37,9 @@ export function authReducer(state: AuthState, action: AuthAction): AuthState {
       return { ...state, firebaseStarted: true };
     case AuthActionTypes.SIGN_IN:
       return { ...state, user: action.payload };
+    case AuthActionTypes.SIGN_OUT:
+      auth().signOut();
+      return { ...state, user: undefined };
     default:
       return state;
   }

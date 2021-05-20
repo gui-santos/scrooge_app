@@ -1,10 +1,26 @@
+import { useContext, useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
+
 import styles from '../styles/Home.module.css';
+import { AuthContext } from '../features/auth';
 
-const test = undefined;
+export default function Home(): JSX.Element {
+  const {
+    state: { firebaseStarted, user },
+  } = useContext(AuthContext);
 
-export default function Home(): any {
+  console.log({ firebaseStarted, user });
+  useEffect(() => {
+    if (firebaseStarted && !user) {
+      console.log('go to login page');
+    }
+  }, [firebaseStarted, user]);
+
+  if (!firebaseStarted) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -16,7 +32,7 @@ export default function Home(): any {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome {user?.name} to <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
         <p className={styles.description}>

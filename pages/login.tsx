@@ -29,7 +29,7 @@ export default function Login(): JSX.Element {
   return (
     <main>
       <h1>Scrooge</h1>
-      <button onClick={handleSignIn}>Sign In</button>
+      <button onClick={handleSignIn}>Sign in with Google</button>
     </main>
   );
 }

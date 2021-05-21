@@ -26,13 +26,12 @@ export function useTransactions(isSignedIn: boolean): UseTransactions {
         });
 
         setTransactions(result);
+        setFetchingTransactions(false);
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error);
         router.push('/error');
       }
-
-      setFetchingTransactions(false);
     };
 
     if (isSignedIn) {

@@ -1,4 +1,5 @@
 import { useContext, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Image from 'next/image';
 
@@ -10,15 +11,15 @@ export default function Home(): JSX.Element {
   const {
     state: { firebaseStarted, user },
   } = useContext(AuthContext);
+  const router = useRouter();
 
-  console.log({ firebaseStarted, user });
   useEffect(() => {
     if (firebaseStarted && !user) {
-      console.log('go to login page');
+      router.push('/login');
     }
   }, [firebaseStarted, user]);
 
-  if (!firebaseStarted) {
+  if (!firebaseStarted || !user) {
     return <p>Loading...</p>;
   }
 
@@ -37,9 +38,7 @@ export default function Home(): JSX.Element {
       <main className={styles.main}>
         <Navigation />
 
-        <h1 className={styles.title}>
-          Welcome {user?.name} to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+        <h1 className={styles.title}>Welcome {user.name}</h1>
 
         <p className={styles.description}>
           Get started by editing{' '}

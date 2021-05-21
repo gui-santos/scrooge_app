@@ -42,7 +42,6 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
         dispatch({ type: AuthActionTypes.SIGN_IN, payload: userInfo as User });
       }
 
-      // TODO: maybe this is not necessary
       dispatch({ type: AuthActionTypes.FB_AUTH_INITIATED });
     });
 
